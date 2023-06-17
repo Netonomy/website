@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { clamp } from "@/utils/clamp"
 import { motion } from "framer-motion"
+import { Github, Twitter } from "lucide-react"
 import { animated, useSpring } from "react-spring"
 
 import useSystemTheme from "@/hooks/useSystemTheme"
@@ -146,12 +147,14 @@ export default function Landing() {
         className="flex absolute top-[55px] right-6 flex-col "
         style={{ opacity: opacity.to((o) => o) }}
       >
-        <Button
-          variant="ghost"
-          className="font-extrabold justify-start text-xl"
-        >
-          launch web app
-        </Button>
+        <Link href={"https://wallet.netonomy.io"}>
+          <Button
+            variant="ghost"
+            className="font-extrabold justify-start text-xl"
+          >
+            launch web app
+          </Button>
+        </Link>
 
         <Button
           variant="ghost"
@@ -163,17 +166,38 @@ export default function Landing() {
       </animated.div>
 
       <animated.div
-        className="flex absolute bottom-[15px] lg:bottom-[55px] right-0 lg:right-6 flex-col "
+        className="flex absolute bottom-[15px] lg:bottom-[55px] right-12 gap-4 items-center justify-around "
         style={{ opacity: opacity.to((o) => o) }}
       >
         <Link href={"https://twitter.com/NetonomyInc"} target="_blank">
-          <motion.div whileTap={{ scale: 0.97 }} whileFocus={{ scale: 0.55 }}>
+          <motion.div
+            whileTap={{ scale: 0.97 }}
+            whileFocus={{ scale: 0.55 }}
+            className="h-[50px] w-[50px]"
+          >
             <Button
               variant="ghost"
               className="font-extrabold justify-start text-xl hover:bg-transparent"
             >
-              <div className="h-[50px] w-[50px] relative lg:h-[60px] lg:w-[60px]">
-                <Image src={"/twitterButton.svg"} alt="twitter" fill />
+              <div className="h-[50px] w-[50px] relative rounded-full bg-black flex flex-col items-center justify-center">
+                <Twitter className="text-white" />
+              </div>
+            </Button>
+          </motion.div>
+        </Link>
+
+        <Link href={"https://github.com/Netonomy"} target="_blank">
+          <motion.div
+            whileTap={{ scale: 0.97 }}
+            whileFocus={{ scale: 0.55 }}
+            className="h-[50px] w-[50px]"
+          >
+            <Button
+              variant="ghost"
+              className="font-extrabold justify-start text-xl hover:bg-transparent"
+            >
+              <div className="h-[50px] w-[50px] relative rounded-full bg-black flex flex-col items-center justify-center">
+                <Github className="text-white " />
               </div>
             </Button>
           </motion.div>
