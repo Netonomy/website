@@ -1,10 +1,10 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { clamp } from "@/utils/clamp"
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
 import { animated, useSpring } from "react-spring"
 
 import useSystemTheme from "@/hooks/useSystemTheme"
@@ -19,9 +19,14 @@ export default function Landing() {
   }
   const headerPosition = clamp(scrollY, 5, 80)
 
-  const { y } = useSpring({
-    from: { y: "80vh" },
-    to: { y: `${headerPosition}vh` },
+  const imagePosition = clamp(scrollY, 0, 100)
+
+  const { y, imageY } = useSpring({
+    from: { y: "80vh", imageY: "0vh" },
+    to: {
+      y: `${headerPosition}vh`,
+      imageY: scrollY ? "0vh" : "50vh", // modify this as per your requirements
+    },
     config: {
       tension: 210,
       friction: 20,
@@ -40,29 +45,36 @@ export default function Landing() {
 
   return (
     <div
-      className="min-h-screen w-screen overflow-hidden"
+      className="min-h-screen w-screen overflow-hidden relative"
       onWheel={handleWheelScroll}
     >
-      <div className="absolute top-0 right-0">
+      <animated.div
+        className="absolute -right-[175px] h-[350px] w-[600px] lg:h-[650px] lg:w-[1200px] lg:-right-[325px]"
+        style={{ top: imageY }}
+      >
         {systemTheme &&
           (systemTheme === "dark" ? (
-            <Image
-              src={"/bigKeyBlack.png"}
-              alt="Big Key"
-              height={800}
-              width={800}
-              priority
-            />
+            <div className="relative h-full w-full">
+              <Image
+                // className="absolute -top-[100px] -right-[225px]"
+                src={"/bigKeyBlackFull.svg"}
+                alt="Big White Key"
+                fill
+                priority
+              />
+            </div>
           ) : (
-            <Image
-              src={"/bigKeyWhiteTop.svg"}
-              alt="Big White Key"
-              height={800}
-              width={800}
-              priority
-            />
+            <div className="relative h-full w-full">
+              <Image
+                // className="absolute -top-[100px] -right-[225px]"
+                src={"/bigKeyWhiteFull.svg"}
+                alt="Big White Key"
+                fill
+                priority
+              />
+            </div>
           ))}
-      </div>
+      </animated.div>
 
       {scrollY < 50 ? (
         <animated.div
