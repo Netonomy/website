@@ -147,7 +147,7 @@ export default function Landing() {
         className="flex absolute top-[55px] right-6 flex-col "
         style={{ opacity: opacity.to((o) => o) }}
       >
-        <Link href={"https://wallet.netonomy.io"}>
+        <Link href={"https://wallet.netonomy.io"} target="_blank">
           <Button
             variant="ghost"
             className="font-extrabold justify-start text-xl"
