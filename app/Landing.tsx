@@ -3,16 +3,12 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion"
-import Fade from "react-reveal/Fade"
+import { clamp } from "@/utils/clamp"
+import { AnimatePresence, motion } from "framer-motion"
 import { animated, useSpring } from "react-spring"
 
 import useSystemTheme from "@/hooks/useSystemTheme"
 import { Button } from "@/components/ui/button"
-
-function clamp(value: any, min: any, max: any) {
-  return Math.min(Math.max(value, min), max)
-}
 
 export default function Landing() {
   const [scrollY, setScrollY] = useState(100)
@@ -43,7 +39,10 @@ export default function Landing() {
   })
 
   return (
-    <div className="min-h-screen w-screen" onWheel={handleWheelScroll}>
+    <div
+      className="min-h-screen w-screen overflow-hidden"
+      onWheel={handleWheelScroll}
+    >
       <div className="absolute top-0 right-0">
         {systemTheme &&
           (systemTheme === "dark" ? (
@@ -71,9 +70,13 @@ export default function Landing() {
           style={{ top: y, opacity: opacity.to((o) => 1 - o) }}
         >
           <div className="flex flex-col gap-10">
-            <div className="flex flex-wrap text-5xl md:text-6xl xl:text-8xl">
-              <div className="font-light">This is&nbsp;</div>
-              <h1 className="font-extrabold min-w-max">netonomy</h1>
+            <div className="flex flex-wrap items-center">
+              <div className="font-extralight text-3xl md:text-5xl xl:text-7xl">
+                This is&nbsp;
+              </div>
+              <h1 className="font-extrabold min-w-max text-5xl md:text-6xl xl:text-8xl">
+                netonomy
+              </h1>
             </div>
 
             <p className="leading-7 [&:not(:first-child)] ml-2 max-w-xs sm:max-w-sm md:max-w-lg md:ml-4 xl:max-w-3xl">
@@ -107,7 +110,10 @@ export default function Landing() {
         </animated.div>
       )}
 
-      <div className="flex absolute top-[85px] right-6 flex-col ">
+      <animated.div
+        className="flex absolute top-[55px] right-6 flex-col "
+        style={{ opacity: opacity.to((o) => o) }}
+      >
         <Button
           variant="ghost"
           className="font-extrabold justify-start text-xl"
@@ -122,25 +128,25 @@ export default function Landing() {
         >
           about
         </Button>
-      </div>
+      </animated.div>
 
-      <div className="flex absolute bottom-[85px] right-6  flex-col ">
+      <animated.div
+        className="flex absolute bottom-[15px] lg:bottom-[55px] right-0 lg:right-6 flex-col "
+        style={{ opacity: opacity.to((o) => o) }}
+      >
         <Link href={"https://twitter.com/NetonomyInc"} target="_blank">
-          <motion.div whileTap={{ scale: 0.97 }}>
+          <motion.div whileTap={{ scale: 0.97 }} whileFocus={{ scale: 0.55 }}>
             <Button
               variant="ghost"
               className="font-extrabold justify-start text-xl hover:bg-transparent"
             >
-              <Image
-                src={"/twitterButton.svg"}
-                alt="twitter"
-                height={60}
-                width={60}
-              />
+              <div className="h-[50px] w-[50px] relative lg:h-[60px] lg:w-[60px]">
+                <Image src={"/twitterButton.svg"} alt="twitter" fill />
+              </div>
             </Button>
           </motion.div>
         </Link>
-      </div>
+      </animated.div>
     </div>
   )
 }
