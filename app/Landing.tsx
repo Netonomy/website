@@ -15,16 +15,16 @@ function clamp(value: any, min: any, max: any) {
 }
 
 export default function Landing() {
-  const [scrollY, setScrollY] = useState(0)
+  const [scrollY, setScrollY] = useState(100)
   const systemTheme = useSystemTheme()
 
   const handleWheelScroll = (e: any) => {
-    setScrollY((prev) => clamp(prev + e.deltaY, 0, 100))
+    setScrollY((prev) => clamp(prev - e.deltaY, 0, 100))
   }
-  const headerPosition = clamp(scrollY, 5, 45)
+  const headerPosition = clamp(scrollY, 5, 80)
 
   const { y } = useSpring({
-    from: { y: "5vh" },
+    from: { y: "80vh" },
     to: { y: `${headerPosition}vh` },
     config: {
       tension: 210,
@@ -34,12 +34,12 @@ export default function Landing() {
 
   const { opacity } = useSpring({
     from: { opacity: 1 },
-    to: { opacity: scrollY > 50 ? 0 : 1 },
+    to: { opacity: scrollY < 50 ? 0 : 1 },
     config: {
       tension: 210,
       friction: 20,
     },
-    reverse: scrollY <= 50,
+    reverse: scrollY >= 50,
   })
 
   return (
@@ -65,10 +65,10 @@ export default function Landing() {
           ))}
       </div>
 
-      {scrollY > 50 ? (
+      {scrollY < 50 ? (
         <animated.div
           className="absolute left-5 lg:left-10 z-4"
-          style={{ bottom: y, opacity: opacity.to((o) => 1 - o) }}
+          style={{ top: y, opacity: opacity.to((o) => 1 - o) }}
         >
           <div className="flex flex-col gap-10">
             <div className="flex flex-wrap text-5xl md:text-6xl xl:text-8xl">
@@ -76,7 +76,7 @@ export default function Landing() {
               <h1 className="font-extrabold min-w-max">netonomy</h1>
             </div>
 
-            <p className="leading-7 [&:not(:first-child)]:mt-6 ml-2 max-w-xs sm:max-w-sm md:max-w-lg md:ml-4 xl:max-w-3xl">
+            <p className="leading-7 [&:not(:first-child)] ml-2 max-w-xs sm:max-w-sm md:max-w-lg md:ml-4 xl:max-w-3xl">
               Welcome to Netonomy, where we are redefining the way you control
               your digital identity, data, and finances. With a powerful blend
               of decentralization and blockchain technology, our upcoming wallet
@@ -95,7 +95,7 @@ export default function Landing() {
       ) : (
         <animated.div
           className="absolute  left-5 lg:left-10 z-40"
-          style={{ bottom: y, opacity: opacity.to((o) => o) }}
+          style={{ top: y, opacity: opacity.to((o) => o) }}
         >
           <animated.h1 className=" font-extrabold text-6xl md:text-8xl min-w-max flex">
             netonomy
@@ -118,6 +118,7 @@ export default function Landing() {
         <Button
           variant="ghost"
           className="font-extrabold justify-start text-xl"
+          onClick={() => setScrollY(0)}
         >
           about
         </Button>
