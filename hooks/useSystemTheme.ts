@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 
 export default function useSystemTheme() {
-  const [systemTheme, setSystemTheme] = useState<"light" | "dark">("light")
+  const [systemTheme, setSystemTheme] = useState<"light" | "dark" | null>(null)
 
   useEffect(() => {
     const handleSystemThemeChange = (event: any) => {

@@ -16,23 +16,24 @@ export default function Landing() {
   return (
     <div className="min-h-screen w-screen">
       <div className="absolute top-0 right-0">
-        {systemTheme === "dark" ? (
-          <Image
-            src={"/bigKeyBlack.png"}
-            alt="Big White Key"
-            height={800}
-            width={800}
-            priority
-          />
-        ) : (
-          <Image
-            src={"/bigKeyWhiteTop.svg"}
-            alt="Big White Key"
-            height={800}
-            width={800}
-            priority
-          />
-        )}
+        {systemTheme &&
+          (systemTheme === "dark" ? (
+            <Image
+              src={"/bigKeyBlack.png"}
+              alt="Big Key"
+              height={800}
+              width={800}
+              priority
+            />
+          ) : (
+            <Image
+              src={"/bigKeyWhiteTop.svg"}
+              alt="Big White Key"
+              height={800}
+              width={800}
+              priority
+            />
+          ))}
       </div>
 
       <div className="absolute bottom-[85px] left-5 lg:left-20 z-40 ">

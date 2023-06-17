@@ -37,23 +37,24 @@ export default function About() {
       </div>
 
       <div className="absolute bottom-0 right-0">
-        {systemTheme === "light" ? (
-          <Image
-            src={"/logo.svg"}
-            alt="Big White Key"
-            height={800}
-            width={800}
-            priority
-          />
-        ) : (
-          <Image
-            src={"/bigKeyBlack.png"}
-            alt="Big White Key"
-            height={800}
-            width={800}
-            priority
-          />
-        )}
+        {systemTheme &&
+          (systemTheme === "light" ? (
+            <Image
+              src={"/logo.svg"}
+              alt="Big White Key"
+              height={800}
+              width={800}
+              priority
+            />
+          ) : (
+            <Image
+              src={"/bigKeyBlack.png"}
+              alt="Big White Key"
+              height={800}
+              width={800}
+              priority
+            />
+          ))}
       </div>
     </div>
   )
