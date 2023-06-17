@@ -13,18 +13,35 @@ import { Button } from "@/components/ui/button"
 export default function Landing() {
   const [scrollY, setScrollY] = useState(100)
   const systemTheme = useSystemTheme()
+  const [startTouchY, setStartTouchY] = useState(null)
 
   const handleWheelScroll = (e: any) => {
     setScrollY((prev) => clamp(prev - e.deltaY, 0, 100))
   }
+
+  const handleTouchStart = (e: any) => {
+    setStartTouchY(e.touches[0].clientY)
+  }
+
+  const handleTouchMove = (e: any) => {
+    if (startTouchY) {
+      const deltaY = e.touches[0].clientY - startTouchY
+      setScrollY((prev) => clamp(prev + deltaY, 0, 100))
+    }
+  }
+
+  const handleTouchEnd = () => {
+    setStartTouchY(null)
+  }
+
   const headerPosition = clamp(scrollY, 5, 80)
 
   const imagePosition = clamp(scrollY, 0, 100)
 
   const { y, imageY } = useSpring({
-    from: { y: "80vh", imageY: "0vh" },
+    from: { y: "80%", imageY: "0vh" },
     to: {
-      y: `${headerPosition}vh`,
+      y: scrollY ? "80%" : "5%",
       imageY: scrollY ? "0vh" : "50vh", // modify this as per your requirements
     },
     config: {
@@ -45,8 +62,11 @@ export default function Landing() {
 
   return (
     <div
-      className="min-h-screen w-screen overflow-hidden relative"
+      className="h-screen max-h-[-webkit-fill-available] w-screen overflow-hidden relative"
       onWheel={handleWheelScroll}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       <animated.div
         className="absolute -right-[175px] h-[350px] w-[600px] lg:h-[650px] lg:w-[1200px] lg:-right-[325px]"
@@ -109,10 +129,10 @@ export default function Landing() {
         </animated.div>
       ) : (
         <animated.div
-          className="absolute  left-5 lg:left-10 z-40"
+          className="absolute left-5 lg:left-10 z-40"
           style={{ top: y, opacity: opacity.to((o) => o) }}
         >
-          <animated.h1 className=" font-extrabold text-6xl md:text-8xl min-w-max flex">
+          <animated.h1 className=" font-extrabold text-6xl md:text-8xl min-w-max flex ">
             netonomy
           </animated.h1>
 

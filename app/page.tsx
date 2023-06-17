@@ -9,7 +9,7 @@ import Landing from "./Landing"
 
 export default function IndexPage() {
   return (
-    <div className="flex flex-col items-center h-screen">
+    <div className="flex flex-col items-center h-screen max-h-[-webkit-fill-available]">
       <Landing />
 
       {/* <About />   */}
